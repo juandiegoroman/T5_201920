@@ -2,11 +2,16 @@ package controller;
 
 import java.util.Scanner;
 
+import model.data_structures.Cola;
+import model.data_structures.IColaIterador;
 import model.logic.MVCModelo;
+import model.logic.Viaje;
 import view.MVCView;
 
 public class Controller {
 
+	public final static String DATOS_PRIMER_SEMESTRE = "./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv";
+	
 	/* Instancia del Modelo*/
 	private MVCModelo modelo;
 	
@@ -29,6 +34,9 @@ public class Controller {
 		boolean fin = false;
 		String dato = "";
 		String respuesta = "";
+		
+		int horaConsulta = -1;
+		int nViajes = -1;
 
 		while( !fin ){
 			view.printMenu();
@@ -36,62 +44,91 @@ public class Controller {
 			int option = lector.nextInt();
 			switch(option){
 				case 1:
-					System.out.println("--------- \nCrear Arreglo \nDar capacidad inicial del arreglo: ");
-				    int capacidad = lector.nextInt();
-				    modelo = new MVCModelo(capacidad); 
-					System.out.println("Arreglo Dinamico creado");
-					System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
+					modelo.cargarDatos(DATOS_PRIMER_SEMESTRE);
+					
+					System.out.println("Para el primer semestre del 2018 se leyeron las siguientes cantidades de viajes por hora: \n");
+					System.out.println("Origen:"+ modelo.darDatosCola().darPrimero().valor().darIdOrigen()+ " Destino: " + modelo.darDatosCola().darPrimero().valor().darIdDestino()+ " Hora: " + modelo.darDatosCola().darPrimero().valor().darHora()+ " Tiempo promedio: " + modelo.darDatosCola().darPrimero().valor().darTiempoPromedio()+"\n");
+					System.out.println("Origen:"+ modelo.darDatosCola().darUltimo().valor().darIdOrigen()+ " Destino: "+ modelo.darDatosCola().darUltimo().valor().darIdDestino()+ "Hora:"+ modelo.darDatosCola().darUltimo().valor().darHora()+ "Tiempo promedio: "+ modelo.darDatosCola().darUltimo().valor().darTiempoPromedio());
+					
+					
 					break;
 
+
 				case 2:
-					System.out.println("--------- \nDar cadena (simple) a ingresar: ");
-					dato = lector.next();
-					modelo.agregar(dato);
-					System.out.println("Dato agregado");
-					System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
+					try{
+						
+						System.out.println("--------- \nIngresar el número de la hora de consulta: ");
+						horaConsulta = lector.nextInt();
+					    System.out.println("La cantidad de viajes del grupo resultante es:"+ modelo.clusterMayor(horaConsulta).tamano()+"\n");
+						Cola<Viaje> cola = modelo.darDatosCola(); 
+					    IColaIterador<Viaje> iter = cola.iterador();
+						Viaje actual = iter.siguiente();
+					    
+						if (cola.tamano() == 0) 
+						{
+
+							System.out.println("No se encontraron resultados con los parámetros dados. \n");
+					}
+						 else {
+								
+								
+								System.out.println("-----------------------------------------------------------------------------");
+								System.out.printf("%10s %10s  %20s  %20s", "Hora", "Origen", "Destino", "Tiempo promedio");
+								System.out.println();
+								System.out.println("-----------------------------------------------------------------------------");
+								
+								while (iter.haySiguiente()) {
+									actual = iter.siguiente();
+									System.out.format("%10s %10s  %20s  %20s", actual.darHora(), actual.darIdOrigen(), actual.darIdDestino(), actual.darTiempoPromedio());
+									System.out.println();
+						 }
+						 }
+						}
+					catch(Exception e) {
+						
+						System.out.print("Debe ingresar un número.\n");
+					}
+					
 					break;
 
 				case 3:
-					System.out.println("--------- \nDar cadena (simple) a buscar: ");
-					dato = lector.next();
-					respuesta = modelo.buscar(dato);
-					if ( respuesta != null)
+					try
 					{
-						System.out.println("Dato encontrado: "+ respuesta);
-					}
-					else
-					{
-						System.out.println("Dato NO encontrado");
-					}
-					System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
-					break;
-
-				case 4:
-					System.out.println("--------- \nDar cadena (simple) a eliminar: ");
-					dato = lector.next();
-					respuesta = modelo.eliminar(dato);
-					if ( respuesta != null)
-					{
-						System.out.println("Dato eliminado "+ respuesta);
-					}
-					else
-					{
-						System.out.println("Dato NO eliminado");							
-					}
-					System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
-					break;
-
-				case 5: 
-					System.out.println("--------- \nContenido del Arreglo: ");
-					view.printModelo(modelo);
-					System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
-					break;	
+						
 					
-				case 6: 
-					System.out.println("--------- \n Hasta pronto !! \n---------"); 
-					lector.close();
-					fin = true;
-					break;	
+					System.out.println("--------- \nIngresar el número de la hora de consulta: ");
+					nViajes = lector.nextInt();
+					System.out.println("La cantidad de viajes del grupo resultante es:"+ modelo.viajesHoraDada(nViajes, horaConsulta).tamano()+"\n");
+					Cola<Viaje> cola = modelo.darDatosCola(); 
+				    IColaIterador<Viaje> iter = cola.iterador();
+					Viaje actual = iter.siguiente();
+					
+					if(cola.tamano() == 0)
+					{
+						System.out.println("No se encontraron resultados. \n");
+					}
+					
+					
+					else
+					{
+						System.out.println("-----------------------------------------------------------------------------");
+						System.out.printf("%10s %10s  %20s  %20s", "Hora", "Origen", "Destino", "Tiempo promedio");
+						System.out.println();
+						System.out.println("-----------------------------------------------------------------------------");
+						while(iter.haySiguiente())
+						{
+							actual = iter.siguiente();
+							System.out.format("%10s %10s  %20s  %20s", actual.darHora(), actual.darIdOrigen(), actual.darIdDestino(), actual.darTiempoPromedio());
+							System.out.println();
+						}
+					}
+					}
+					catch(Exception e)
+					{
+						System.out.print("Debe ingresar un número.\n");
+					}
+					
+			break;
 
 				default: 
 					System.out.println("--------- \n Opcion Invalida !! \n---------");

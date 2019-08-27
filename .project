@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>esqueleto_t0_201920</name>
+	<name>T2_201920</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/data/bogota-cadastral-2018-1-All-HourlyAggregate.csv</name>
+			<type>1</type>
+			<location>C:/Users/user/Desktop/Ing. de Sistemas/Estructuras de datos/bogota-cadastral-2018-1-All-HourlyAggregate.csv</location>
+		</link>
+	</linkedResources>
 </projectDescription>
