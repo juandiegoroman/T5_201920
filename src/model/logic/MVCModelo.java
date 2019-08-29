@@ -67,16 +67,19 @@ public class MVCModelo {
         return mayor;
     }
 
-    public Cola<Viaje> viajesHoraDada(int n, int hora) {
-        int cant = 0;
-        Cola<Viaje> temp = null;
-        while (datosPila.tamano() > 0 && cant < n) {
-            if (datosPila.darPrimero().valor().darHora() == hora) {
-                temp.enqueu(datosPila.darPrimero().valor());
-                cant++;
+    public Cola<Viaje> ultimosViajesHoraDada(int n, int hora) {
+        int cantidad = 0;
+        Cola<Viaje> ultimos = new Cola<>();
+        while (datosPila.tamano() > 0 && cantidad < n) {
+
+           Viaje temp = datosPila.sacar();
+
+            if (temp.darHora() == hora) {
+                ultimos.enqueu(temp);
+                cantidad++;
             }
         }
-        return temp;
+        return ultimos;
 
     }
 
@@ -140,7 +143,7 @@ public class MVCModelo {
     {
         MVCModelo m = new MVCModelo();
         m.cargarDatos(Controller.DATOS_PRIMER_SEMESTRE);
-        m.clusterMayor(1);
+        m.ultimosViajesHoraDada(3,2);
     }
 
 }

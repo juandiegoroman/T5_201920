@@ -4,9 +4,9 @@ public class Pila<E> implements IPila<E>, IPilaIterable<E>
 {
 	private Nodo<E> primero;
 	private Nodo<E> ultimo;
+
 	private int tamano;
-	private Nodo<E> anterior;
-	
+
 	public Pila()
 	{
 		tamano = 0;
@@ -27,9 +27,9 @@ public class Pila<E> implements IPila<E>, IPilaIterable<E>
 
 			Nodo<E> temp = ultimo;
 
-			ultimo = new Nodo(valor, null, null);
+			ultimo = new Nodo(valor, null, temp);
 
-			temp.insertar(ultimo);
+			temp.insertarSiguiente(ultimo);
 		}
 
 		tamano++;
@@ -51,15 +51,16 @@ public class Pila<E> implements IPila<E>, IPilaIterable<E>
 	//Sacar ultimo
 	public E sacar() 
 	{
-		Nodo<E> temp = null;
-		if(tamano != 0)
+		Nodo<E> temp = ultimo;
+
+		if(tamano > 0)
 		{
-			temp = ultimo;
 			ultimo = ultimo.anterior();
+			ultimo.insertarSiguiente(null);
 		}
 		tamano--;
-		
-		return temp.valor();
+
+		return (temp == null) ? null : temp.valor();
 	}
 
 	@Override

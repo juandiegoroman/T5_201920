@@ -10,7 +10,7 @@ import view.MVCView;
 
 public class Controller {
 
-//    public final static String DATOS_PRIMER_SEMESTRE = "./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv";
+    //    public final static String DATOS_PRIMER_SEMESTRE = "./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv";
     public final static String DATOS_PRIMER_SEMESTRE = "./data/TestData.csv";
 
     /* Instancia del Modelo*/
@@ -66,11 +66,9 @@ public class Controller {
                             System.out.println("Debe ingresar un numero");
                         }
 
-
                         Cola<Viaje> cola = modelo.clusterMayor(horaConsulta);
 
                         System.out.println("La cantidad de viajes del grupo resultante es: " + cola.tamano() + "\n");
-
 
                         IColaIterador<Viaje> iter = cola.iterador();
 
@@ -97,11 +95,12 @@ public class Controller {
                         } catch (Exception e) {
                             System.out.println("Debe ingresar un numero");
                         }
-                        System.out.println("La cantidad de viajes del grupo resultante es:" + modelo.viajesHoraDada(nViajes, horaConsulta).tamano() + "\n");
-                        Cola<Viaje> cola = modelo.darDatosCola();
-                        IColaIterador<Viaje> iter = cola.iterador();
 
-                        Viaje actual = iter.siguiente();
+                        Cola<Viaje> cola = modelo.ultimosViajesHoraDada(nViajes, horaConsulta);
+
+                        System.out.println("La cantidad de viajes del grupo resultante es: " + cola.tamano() + "\n");
+
+                        IColaIterador<Viaje> iter = cola.iterador();
 
                         if (cola.tamano() == 0) {
                             System.out.println("No se encontraron resultados. \n");
@@ -111,6 +110,7 @@ public class Controller {
 
                     } catch (Exception e) {
                         System.out.print("No se han cargado los datos.\n");
+                        e.printStackTrace();
                     }
 
                     break;

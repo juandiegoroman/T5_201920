@@ -48,7 +48,7 @@ public class Cola<E> implements ICola<E>, IColaIterable<E>
 
 			ultimo = new Nodo(valor, null, null);
 
-			temp.insertar(ultimo);
+			temp.insertarSiguiente(ultimo);
 		}
 
 		tamano++;
@@ -59,7 +59,7 @@ public class Cola<E> implements ICola<E>, IColaIterable<E>
 	public E dequeue() 
 	{
 		Nodo<E> sacar = null;	
-		if(tamano >= 0)
+		if(tamano > 0)
 		{
 		sacar = primero;
 		primero = primero.siguiente();
@@ -67,7 +67,7 @@ public class Cola<E> implements ICola<E>, IColaIterable<E>
 
 		tamano--;
 
-		return sacar.valor();
+		return (sacar == null) ? null: sacar.valor();
 	}
 
 	@Override
