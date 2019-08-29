@@ -134,7 +134,7 @@ public class MVCModelo {
 
 			public Viaje crearViaje(String[] datos )
 			{
-				return new Viaje(Integer.valueOf(datos[0]), Integer.valueOf(datos[1]), Integer.valueOf(datos[2]), Integer.valueOf(datos[3]), Double.valueOf(datos[4]),Double.valueOf(datos[5]), Double.valueOf(datos[6]), Double.valueOf(datos[7]));
+				return new Viaje(Integer.valueOf(datos[0]), Integer.valueOf(datos[1]), Integer.valueOf(datos[2]), Double.valueOf(datos[3]),Double.valueOf(datos[4]), Double.valueOf(datos[5]), Double.valueOf(datos[6]));
 			}
 			
 			public Pila<Viaje> darDatosPila()

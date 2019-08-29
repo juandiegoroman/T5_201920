@@ -7,8 +7,6 @@ public class Viaje implements Comparable<Viaje>
 
     private int idDestino;
 
-    private int mes;
-    
     private int hora;
 
     private double tiempoPromedio;
@@ -19,10 +17,9 @@ public class Viaje implements Comparable<Viaje>
 
     private double desviacionGeometrica;
 
-    public Viaje(int idOrigen, int idDestino, int mes,int hora, double tiempoPromedio, double desviacionEstandar, double promedioGeometrico, double desviacionGeometrica) {
+    public Viaje(int idOrigen, int idDestino, int hora, double tiempoPromedio, double desviacionEstandar, double promedioGeometrico, double desviacionGeometrica) {
         this.idOrigen = idOrigen;
         this.idDestino = idDestino;
-        this.mes = mes;
         this.hora = hora;
         this.tiempoPromedio = tiempoPromedio;
         this.desviacionEstandar = desviacionEstandar;
@@ -30,11 +27,7 @@ public class Viaje implements Comparable<Viaje>
         this.desviacionGeometrica = desviacionGeometrica;
     }
     
-    
-    public int darMes()
-    {
-    	return mes;
-    }
+
     public int darHora()
     {
     	return hora;
