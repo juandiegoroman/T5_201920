@@ -88,13 +88,22 @@ public class Controller {
                 case 3:
                     try {
 
-                        System.out.println("--------- \nIngresar el n�mero de la hora de consulta: ");
+                        System.out.println("--------- \nIngresar el n�mero de viajes de consulta: ");
 
                         try {
                             nViajes = lector.nextInt();
                         } catch (Exception e) {
                             System.out.println("Debe ingresar un numero");
                         }
+
+                        System.out.println("--------- \nIngresar el n�mero de la hora de consulta: ");
+
+                        try {
+                            horaConsulta = lector.nextInt();
+                        } catch (Exception e) {
+                            System.out.println("Debe ingresar un numero");
+                        }
+
 
                         Cola<Viaje> cola = modelo.ultimosViajesHoraDada(nViajes, horaConsulta);
 

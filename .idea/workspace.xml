@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d08079c3-4377-4960-b158-6271a7ed8a11" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/model/data_structures/Pila.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/data_structures/Pila.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/logic/MVCModelo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/logic/MVCModelo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Controller.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/controller/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="98" column="63" lean-forward="true" selection-start-line="98" selection-start-column="63" selection-end-line="98" selection-end-column="63" />
+            <state relative-caret-position="260">
+              <caret line="109" column="91" lean-forward="true" selection-start-line="109" selection-start-column="91" selection-end-line="109" selection-end-column="91" />
             </state>
           </provider>
         </entry>
@@ -51,11 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MVCModelo.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MVCModelo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/logic/MVCModelo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="75" lean-forward="true" selection-start-line="75" selection-end-line="75" />
+            <state relative-caret-position="257">
+              <caret line="81" selection-start-line="81" selection-end-line="81" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -123,10 +122,10 @@
         <option value="$PROJECT_DIR$/test/test/data_structures/TestArregloDinamico.java" />
         <option value="$PROJECT_DIR$/test/test/logic/TestMVCModelo.java" />
         <option value="$PROJECT_DIR$/src/model/logic/Viaje.java" />
-        <option value="$PROJECT_DIR$/src/controller/Controller.java" />
         <option value="$PROJECT_DIR$/src/model/data_structures/Cola.java" />
         <option value="$PROJECT_DIR$/src/model/data_structures/Pila.java" />
         <option value="$PROJECT_DIR$/src/model/logic/MVCModelo.java" />
+        <option value="$PROJECT_DIR$/src/controller/Controller.java" />
       </list>
     </option>
   </component>
@@ -322,12 +321,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1567045162553</updated>
-      <workItem from="1567045167172" duration="6529000" />
+      <workItem from="1567045167172" duration="6679000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6529000" />
+    <option name="totallyTimeSpent" value="6679000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -343,11 +342,11 @@
       <window_info anchor="right" id="Maven Projects" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.41025642" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.57834756" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info id="Capture Tool" />
       <window_info id="Designer" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24966443" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24966443" />
       <window_info anchor="right" id="Database" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -385,7 +384,7 @@
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="46" />
+      <option name="time" value="48" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -693,13 +692,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="98" column="63" lean-forward="true" selection-start-line="98" selection-start-column="63" selection-end-line="98" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/data_structures/Cola.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="600">
@@ -734,11 +726,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model/logic/MVCModelo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="75" lean-forward="true" selection-start-line="75" selection-end-line="75" />
+        <state relative-caret-position="257">
+          <caret line="81" selection-start-line="81" selection-end-line="81" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="109" column="91" lean-forward="true" selection-start-line="109" selection-start-column="91" selection-end-line="109" selection-end-column="91" />
         </state>
       </provider>
     </entry>
