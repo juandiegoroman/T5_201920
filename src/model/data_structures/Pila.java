@@ -114,6 +114,22 @@ public class Pila<E> implements IPila<E>, IPilaIterable<E>
 	
 		return new pilaIterador();
 	}
+	public E buscar(int indice) throws RuntimeException {
+		
+		int cont = 0;
 
+		if (indice >= tamano)
+			throw new RuntimeException("Desborde: " + indice);
+
+		Nodo<E> actual = primero;
+
+		while (cont < indice) {
+			actual = actual.siguiente();
+			cont++;
+		}
+
+		return actual.valor();
+
+	}
 
 }
