@@ -52,7 +52,6 @@ public class Cola<E> implements ICola<E>, IColaIterable<E>
 		}
 
 		tamano++;
-		
 	}
 
 	@Override
@@ -65,6 +64,9 @@ public class Cola<E> implements ICola<E>, IColaIterable<E>
 		sacar = primero;
 		primero = primero.siguiente();
 		}
+
+		tamano--;
+
 		return sacar.valor();
 	}
 

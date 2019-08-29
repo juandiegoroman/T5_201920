@@ -44,7 +44,7 @@ public class MVCModelo {
 		Cola<Viaje> temp = null;
 		Cola<Viaje> mayor = null;
 		
-		while(datosCola.darPrimero() != null)
+		while(datosCola.tamano() >= 0)
 		{
 		if(datosCola.darPrimero().valor().darHora() < hora)
 		{
@@ -61,9 +61,7 @@ public class MVCModelo {
 			if (temp.tamano() > mayor.tamano()) {
 				mayor = temp;
 			}
-			
-			
-		
+
 		}
 		
 		
