@@ -81,7 +81,7 @@ public class TestPila{
 		setUp2();
 		lista.sacar();
 		assertEquals(9, lista.tamano());
-		assertEquals("1", lista.buscar(0));
+		assertEquals("8", lista.buscar(8));
 		
 
 	}

@@ -10,8 +10,8 @@ import view.MVCView;
 
 public class Controller {
 
-    //    public final static String DATOS_PRIMER_SEMESTRE = "./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv";
-    public final static String DATOS_PRIMER_SEMESTRE = "./data/TestData.csv";
+        public final static String DATOS_PRIMER_SEMESTRE = "./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv";
+
 
     /* Instancia del Modelo*/
     private MVCModelo modelo;

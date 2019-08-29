@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>T2_201920</name>
+	<name>esqueleto_t0_201920</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -16,9 +16,14 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>src/data/bogota-cadastral-2018-1-All-HourlyAggregate.csv</name>
+			<name>lib/commons-lang3-3.8.1.jar</name>
 			<type>1</type>
-			<location>C:/Users/user/Desktop/Ing. de Sistemas/Estructuras de datos/bogota-cadastral-2018-1-All-HourlyAggregate.csv</location>
+			<location>C:/Users/andre/Downloads/commons-lang3-3.8.1.jar</location>
+		</link>
+		<link>
+			<name>lib/opencsv-4.0.jar</name>
+			<type>1</type>
+			<location>C:/Users/andre/Downloads/opencsv-4.0.jar</location>
 		</link>
 	</linkedResources>
 </projectDescription>
