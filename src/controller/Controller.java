@@ -11,7 +11,7 @@ import view.MVCView;
 public class Controller {
 
 //    public final static String DATOS_PRIMER_SEMESTRE = "./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv";
-    public final static String DATOS_PRIMER_SEMESTRE = "./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv";
+    public final static String DATOS_PRIMER_SEMESTRE = "./data/TestData.csv";
 
     /* Instancia del Modelo*/
     private MVCModelo modelo;
@@ -66,18 +66,18 @@ public class Controller {
                             System.out.println("Debe ingresar un numero");
                         }
 
-                        System.out.println("La cantidad de viajes del grupo resultante es:" + modelo.clusterMayor(horaConsulta).tamano() + "\n");
 
-                        Cola<Viaje> cola = modelo.darDatosCola();
+                        Cola<Viaje> cola = modelo.clusterMayor(horaConsulta);
+
+                        System.out.println("La cantidad de viajes del grupo resultante es: " + cola.tamano() + "\n");
+
 
                         IColaIterador<Viaje> iter = cola.iterador();
 
                         if (cola.tamano() == 0) {
-
                             System.out.println("No se encontraron resultados con los par�metros dados. \n");
                         } else {
-
-                            printArray(iter);
+                            printList(iter);
                         }
                     } catch (Exception e) {
 
@@ -106,7 +106,7 @@ public class Controller {
                         if (cola.tamano() == 0) {
                             System.out.println("No se encontraron resultados. \n");
                         } else {
-                            printArray(iter);
+                            printList(iter);
                         }
 
                     } catch (Exception e) {
@@ -123,7 +123,7 @@ public class Controller {
 
     }
 
-    private void printArray(IColaIterador<Viaje> iter) {
+    private void printList(IColaIterador<Viaje> iter) {
         Viaje actual;
         System.out.println("-----------------------------------------------------------------------------");
         System.out.printf("%10s %10s  %20s  %20s", "Hora", "Origen", "Destino", "Tiempo promedio");
