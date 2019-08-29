@@ -70,7 +70,7 @@ public class MVCModelo {
     public Cola<Viaje> ultimosViajesHoraDada(int n, int hora) {
         int cantidad = 0;
         Cola<Viaje> ultimos = new Cola<>();
-        while (datosPila.tamano() > 0 && cantidad < n) {
+        while (datosPila.tamano() > 0 && cantidad <= n) {
 
            Viaje temp = datosPila.sacar();
 

@@ -56,7 +56,8 @@ public class Pila<E> implements IPila<E>, IPilaIterable<E>
 		if(tamano > 0)
 		{
 			ultimo = ultimo.anterior();
-			ultimo.insertarSiguiente(null);
+
+			if (ultimo != null) ultimo.insertarSiguiente(null);
 		}
 		tamano--;
 
