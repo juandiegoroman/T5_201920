@@ -3,7 +3,7 @@ package model.data_structures;
 import java.util.Comparator;
 import java.util.Iterator;
 
-public class MaxColaCP<Key extends IComparable<Key>> implements IMaxColaCP<Key> {
+public class MaxHeapCP<Key extends IComparable<Key>> implements IMaxCP<Key> {
 
     private Key[] pq;                    // store items at indices 1 to n
 
@@ -17,7 +17,7 @@ public class MaxColaCP<Key extends IComparable<Key>> implements IMaxColaCP<Key> 
      * @param initCapacity the initial capacity of this priority queue
      */
 
-    public MaxColaCP(int initCapacity) {
+    public MaxHeapCP(int initCapacity) {
         pq = (Key[]) new Object[initCapacity + 1];
 
         n = 0;
@@ -27,7 +27,7 @@ public class MaxColaCP<Key extends IComparable<Key>> implements IMaxColaCP<Key> 
      * Initializes an empty priority queue.
      */
 
-    public MaxColaCP() {
+    public MaxHeapCP() {
 
         this(1);
 
@@ -42,7 +42,7 @@ public class MaxColaCP<Key extends IComparable<Key>> implements IMaxColaCP<Key> 
      * @param comparator   the order in which to compare the keys
      */
 
-    public MaxColaCP(int initCapacity, Comparator<Key> comparator) {
+    public MaxHeapCP(int initCapacity, Comparator<Key> comparator) {
 
         this.comparator = comparator;
 
@@ -59,7 +59,7 @@ public class MaxColaCP<Key extends IComparable<Key>> implements IMaxColaCP<Key> 
      * @param comparator the order in which to compare the keys
      */
 
-    public MaxColaCP(Comparator<Key> comparator) {
+    public MaxHeapCP(Comparator<Key> comparator) {
 
         this(1, comparator);
 
@@ -74,7 +74,7 @@ public class MaxColaCP<Key extends IComparable<Key>> implements IMaxColaCP<Key> 
      * @param keys the array of keys
      */
 
-    public MaxColaCP(Key[] keys) {
+    public MaxHeapCP(Key[] keys) {
 
         n = keys.length;
 
@@ -317,7 +317,7 @@ public class MaxColaCP<Key extends IComparable<Key>> implements IMaxColaCP<Key> 
 
         // create a new pq
 
-        private MaxColaCP<Key> copy;
+        private MaxHeapCP<Key> copy;
 
 
         // add all items to copy of heap
@@ -326,9 +326,9 @@ public class MaxColaCP<Key extends IComparable<Key>> implements IMaxColaCP<Key> 
 
         public HeapIterator() {
 
-            if (comparator == null) copy = new MaxColaCP<Key>(darNumElementos());
+            if (comparator == null) copy = new MaxHeapCP<Key>(darNumElementos());
 
-            else copy = new MaxColaCP<Key>(darNumElementos(), comparator);
+            else copy = new MaxHeapCP<Key>(darNumElementos(), comparator);
 
             for (int i = 1; i <= n; i++)
 

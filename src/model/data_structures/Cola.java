@@ -1,6 +1,6 @@
 package model.data_structures;
 
-public class Cola<E> implements ICola<E>, IColaIterable<E>
+public class Cola<E extends Comparable<E>> implements IMaxCP<E>, IColaIterable<E> 
 {
 	private Nodo<E> primero;
 	private Nodo<E> ultimo;
@@ -32,31 +32,48 @@ public class Cola<E> implements ICola<E>, IColaIterable<E>
 	
 	
 	
-	@Override
+	
 	//Agregar al final
-	public void enqueu(E valor) 
+	@Override
+	public void agregar(E valor) 
 	{
-		if (estaVacia()) 
+		if (esVacia()) 
 		{
 			ultimo = new Nodo(valor, null,null);
 			primero = ultimo;
 		} 
-		else 
+		else if(ultimo.valor().compareTo(valor) > 0)
 		{
 
 			Nodo<E> temp = ultimo;
 
 			ultimo = new Nodo(valor, null, null);
-
+			
 			temp.insertarSiguiente(ultimo);
+		}
+		else
+		{
+			Nodo<E> temp = ultimo.anterior();
+			while(temp.valor().compareTo(valor) < 0)
+			{
+				temp =temp.anterior();
+				
+			}
+			
+			
+			Nodo<E> nuevo = new Nodo(valor,temp.siguiente(),temp);
+			
+			temp.insertarSiguiente(nuevo);
+			nuevo.siguiente().insertarAnterior(nuevo);
 		}
 
 		tamano++;
 	}
 
-	@Override
+	
 	// Sacar primero
-	public E dequeue() 
+	@Override
+	public E sacarMax() 
 	{
 		Nodo<E> sacar = null;	
 		if(tamano > 0)
@@ -73,12 +90,12 @@ public class Cola<E> implements ICola<E>, IColaIterable<E>
 	
 	
 	@Override
-	public int tamano() {
+	public int darNumElementos() {
 		return tamano;
 	}
 
 	@Override
-	public boolean estaVacia() {
+	public boolean esVacia() {
 		return primero== null;
 	}
 	
@@ -133,5 +150,14 @@ public class Cola<E> implements ICola<E>, IColaIterable<E>
 		return new colaIterador();
 		
 	}
+
+
+	@Override
+	public E darMax() {
+		
+		return ultimo.valor();
+	}
+
+
 	
 }

@@ -1,6 +1,7 @@
 package model.data_structures;
 
-public class Nodo<E> {
+public class Nodo<E extends Comparable<E>>
+{
 
     private E valor;
 
@@ -31,6 +32,10 @@ public class Nodo<E> {
     public void insertarSiguiente(Nodo<E> nodo)
     {
         siguiente = nodo;
+    }
+    public void insertarAnterior(Nodo<E> nodo)
+    {
+    	anterior = nodo;
     }
     
     

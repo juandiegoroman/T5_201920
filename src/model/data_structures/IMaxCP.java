@@ -1,6 +1,6 @@
 package model.data_structures;
 
-public interface IMaxColaCP<Key extends IComparable<Key>>
+public interface IMaxCP<Key extends Comparable<Key>>
 {
 	void agregar(Key v) ;
 	Key darMax() ;
