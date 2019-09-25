@@ -70,6 +70,8 @@ public class Cola<E> implements ICola<E>, IColaIterable<E>
 		return (sacar == null) ? null: sacar.valor();
 	}
 
+	
+	
 	@Override
 	public int tamano() {
 		return tamano;
