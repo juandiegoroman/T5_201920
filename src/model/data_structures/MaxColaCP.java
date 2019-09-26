@@ -109,7 +109,7 @@ public class MaxColaCP<E extends Comparable<E>> implements IMaxCP<E>, IColaItera
 		return primero;
 	}
 	
-	private class colaIterador implements IColaIterador<E>
+	private class colaIterador implements Iterator<E>
 	{
 
 		private Nodo<E> actual;
@@ -145,7 +145,7 @@ public class MaxColaCP<E extends Comparable<E>> implements IMaxCP<E>, IColaItera
 	}
 	
 	@Override
-	public IColaIterador<E> iterador() 
+	public Iterator<E> iterador()
 	{
 		return new colaIterador();
 		
