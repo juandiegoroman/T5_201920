@@ -1,6 +1,8 @@
 package model.data_structures;
 
-public class MaxColaCP<E extends Comparable<E>> implements IMaxCP<E>, IColaIterable<E> 
+import java.util.Iterator;
+
+public class MaxColaCP<E extends Comparable<E>> implements IMaxCP<E>
 {
 	private Nodo<E> primero;
 	private Nodo<E> ultimo;
@@ -29,9 +31,7 @@ public class MaxColaCP<E extends Comparable<E>> implements IMaxCP<E>, IColaItera
 
 	}
 	
-	
-	
-	
+
 	
 	//Agregar al final
 	@Override
@@ -70,7 +70,14 @@ public class MaxColaCP<E extends Comparable<E>> implements IMaxCP<E>, IColaItera
 		tamano++;
 	}
 
-	
+	@Override
+	public E darMax() {
+
+		return ultimo.valor();
+	}
+
+
+
 	// Sacar primero
 	@Override
 	public E sacarMax() 
@@ -119,7 +126,7 @@ public class MaxColaCP<E extends Comparable<E>> implements IMaxCP<E>, IColaItera
 			actual = null;
 		}
 		@Override
-		public boolean haySiguiente() {
+		public boolean hasNext() {
 			
 			if(primero == null) return false;
 			
@@ -127,7 +134,7 @@ public class MaxColaCP<E extends Comparable<E>> implements IMaxCP<E>, IColaItera
 		}
 
 		@Override
-		public E siguiente() {
+		public E next() {
 			if (actual == null) {
 				actual = primero;
 			}
@@ -143,20 +150,13 @@ public class MaxColaCP<E extends Comparable<E>> implements IMaxCP<E>, IColaItera
 		
 		
 	}
-	
-	@Override
-	public Iterator<E> iterador()
+
+	public Iterator<E> iterator()
 	{
 		return new colaIterador();
 		
 	}
 
-
-	@Override
-	public E darMax() {
-		
-		return ultimo.valor();
-	}
 
 
 	
