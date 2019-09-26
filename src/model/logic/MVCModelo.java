@@ -10,10 +10,8 @@ import java.util.Random;
 
 import com.opencsv.CSVReader;
 
-import model.data_structures.IListaIterador;
-import model.data_structures.ListaEncadenada;
-import model.data_structures.MaxColaCP;
-import model.data_structures.MaxHeapCP;
+import model.data_structures.*;
+import model.data_structures.QuickSort;
 
 
 /**
@@ -26,10 +24,13 @@ public class MVCModelo {
 
     public final static String DATOS_PRIMER_SEMESTRE = "./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv";
     public final static String DATOS_SEGUNDO_SEMESTRE = "./data/bogota-cadastral-2018-2-All-HourlyAggregate.csv";
+    public final static int CANTIDAD = 200000;
 
     private ListaEncadenada<TravelTime> datos;
     private MaxColaCP<TravelTime> colaCP;
     private MaxHeapCP<TravelTime> heapCP;
+    private TravelTime[] muestraAleatorea;
+
 
     /**
      * Constructor del modelo del mundo con capacidad predefinida
@@ -43,6 +44,7 @@ public class MVCModelo {
     public void loadTravelTimes(){
         cargar(DATOS_PRIMER_SEMESTRE, 1);
         cargar(DATOS_SEGUNDO_SEMESTRE, 2);
+        muestraAleatorea = generarMuestraAleatorea(CANTIDAD);
     }
 
     public void cargar(String ruta, int semestre) {
@@ -83,18 +85,18 @@ public class MVCModelo {
 
         TravelTime[] a = new TravelTime[n];
 
-        datos.ordenarPorMergeSort(new ComparadorTiempoPromedio());
+        Comparable[] arr = convertirAArreglo(datos);
 
-        IListaIterador<TravelTime> iter = datos.iterador();
-        TravelTime temp = iter.siguiente();
+        QuickSort.ordenar(arr);
 
+
+        int cont = 0;
 
         for (int i = 0; i < n; i++) {
 
-            while (temp.darMeanTravelTime() == datos.darSiguiente().darMeanTravelTime()){
-                temp = iter.siguiente();
-            }
-            a[i] = temp;
+            while (arr[cont] == arr[++cont])
+
+            a[i] = (TravelTime) arr[cont];
         }
 
         mezclarAleatoreamente(a);
@@ -123,6 +125,23 @@ public class MVCModelo {
         }
     }
 
+    private Comparable[] convertirAArreglo(ListaEncadenada<TravelTime> lista) {
+
+        Comparable[] arr = new Comparable[lista.tamano()];
+
+        int cont = 0;
+
+        IListaIterador<TravelTime> iter = lista.iterador();
+
+        while(iter.haySiguiente())
+        {
+            Comparable actual = iter.siguiente();
+            arr[cont] = (Comparable) actual;
+            cont++;
+        }
+        return arr;
+    }
+
     /**
      * Requerimiento de agregar dato
      *
@@ -143,28 +162,24 @@ public class MVCModelo {
     }
 
     public double tiempoPromedioAgregarImplementacionHeap(){
-        heapCP = new MaxHeapCP<>(200000);
+        heapCP = new MaxHeapCP<>(CANTIDAD);
 
-        TravelTime[] a = generarMuestraAleatorea(200000);
         Contador cont = new Contador();
 
-        for (TravelTime tiempoDeViaje: a) {
+        for (TravelTime tiempoDeViaje: muestraAleatorea) {
             heapCP.agregar(tiempoDeViaje);
         }
         double total = cont.duracion();
 
-        return total / 200000;
+        return total / CANTIDAD;
     }
 
     public double tiempoPromedioSacarMaxImplementacionHeap(){
-        heapCP = new MaxHeapCP<>(200000);
+        heapCP = new MaxHeapCP<>(CANTIDAD);
 
-        TravelTime[] a = generarMuestraAleatorea(200000);
-
-        for (TravelTime tiempoDeViaje: a) {
+        for (TravelTime tiempoDeViaje: muestraAleatorea) {
             heapCP.agregar(tiempoDeViaje);
         }
-
 
         Contador cont = new Contador();
 
@@ -173,31 +188,29 @@ public class MVCModelo {
         }
         double total = cont.duracion();
 
-        return total / 200000;
+        return total / CANTIDAD;
     }
 
 
     public double tiempoPromedioAgregarImplementacionCola(){
         colaCP = new MaxColaCP();
 
-        TravelTime[] a = generarMuestraAleatorea(200000);
         Contador cont = new Contador();
 
-        for (TravelTime tiempoDeViaje: a) {
+        for (TravelTime tiempoDeViaje: muestraAleatorea) {
             colaCP.agregar(tiempoDeViaje);
         }
         double total = cont.duracion();
 
-        return total / 200000;
+        return total / CANTIDAD;
     }
 
     public double tiempoPromedioSacarMaxImplementacionCola(){
 
         colaCP = new MaxColaCP();
 
-        TravelTime[] a = generarMuestraAleatorea(200000);
 
-        for (TravelTime tiempoDeViaje: a) {
+        for (TravelTime tiempoDeViaje: muestraAleatorea) {
             colaCP.agregar(tiempoDeViaje);
         }
 
@@ -209,7 +222,7 @@ public class MVCModelo {
 
         double total = cont.duracion();
 
-        return total / 200000;
+        return total / CANTIDAD;
     }
 
     public class Contador
