@@ -2,7 +2,7 @@ package controller;
 
 import java.util.Scanner;
 
-import model.data_structures.Cola;
+import model.data_structures.MaxColaCP;
 import model.data_structures.IColaIterador;
 import model.logic.MVCModelo;
 import model.logic.Viaje;
@@ -66,7 +66,7 @@ public class Controller {
                             System.out.println("Debe ingresar un numero");
                         }
 
-                        Cola<Viaje> cola = modelo.clusterMayor(horaConsulta);
+                        MaxColaCP<Viaje> cola = modelo.clusterMayor(horaConsulta);
 
                         System.out.println("La cantidad de viajes del grupo resultante es: " + cola.tamano() + "\n");
 
@@ -105,7 +105,7 @@ public class Controller {
                         }
 
 
-                        Cola<Viaje> cola = modelo.ultimosViajesHoraDada(nViajes, horaConsulta);
+                        MaxColaCP<Viaje> cola = modelo.ultimosViajesHoraDada(nViajes, horaConsulta);
 
                         System.out.println("La cantidad de viajes del grupo resultante es: " + cola.tamano() + "\n");
 

@@ -1,12 +1,12 @@
 package model.data_structures;
 
-public class Cola<E extends Comparable<E>> implements IMaxCP<E>, IColaIterable<E> 
+public class MaxColaCP<E extends Comparable<E>> implements IMaxCP<E>, IColaIterable<E> 
 {
 	private Nodo<E> primero;
 	private Nodo<E> ultimo;
 	private int tamano;
 	
-	public Cola()
+	public MaxColaCP()
 	{
 		tamano = 0;
 	}

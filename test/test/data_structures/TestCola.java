@@ -1,6 +1,6 @@
 package test.data_structures;
 
-import model.data_structures.Cola;
+import model.data_structures.MaxColaCP;
 import model.data_structures.IColaIterador;
 
 
@@ -11,11 +11,11 @@ import org.junit.Test;
 
 public class TestCola {
 
-	private Cola<String> lista;
+	private MaxColaCP<String> lista;
 
 	@Before
 	public void setUp1() {
-		lista = new Cola<String>();
+		lista = new MaxColaCP<String>();
 	}
 
 	public void setUp2() {

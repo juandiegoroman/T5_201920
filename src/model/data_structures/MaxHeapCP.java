@@ -3,7 +3,7 @@ package model.data_structures;
 import java.util.Comparator;
 import java.util.Iterator;
 
-public class MaxHeapCP<Key extends IComparable<Key>> implements IMaxCP<Key> {
+public class MaxHeapCP<Key extends Comparable<Key>> implements IMaxCP<Key> {
 
     private Key[] pq;                    // store items at indices 1 to n
 

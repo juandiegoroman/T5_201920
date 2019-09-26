@@ -1,6 +1,6 @@
 package test.data_structures;
 
-import model.data_structures.Cola;
+import model.data_structures.MaxColaCP;
 import model.data_structures.IColaIterador;
 import model.data_structures.IPilaIterador;
 import model.data_structures.Pila;

@@ -1,6 +1,7 @@
 package model.logic;
 
 
+import java.awt.List;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,7 +10,7 @@ import java.util.Iterator;
 import com.opencsv.CSVReader;
 
 import controller.Controller;
-import model.data_structures.Cola;
+import model.data_structures.MaxColaCP;
 import model.data_structures.IColaIterador;
 
 
@@ -23,14 +24,14 @@ public class MVCModelo {
      */
 
 
-    private Cola<Viaje> datosCola;
+    private MaxColaCP<Viaje> datosCola;
 
     /**
      * Constructor del modelo del mundo con capacidad predefinida
      */
     public MVCModelo() {
 
-        datosCola = new Cola();
+        datosCola = new MaxColaCP();
     }
 
     /**
@@ -40,24 +41,24 @@ public class MVCModelo {
      */
 
 
-    public Cola<Viaje> clusterMayor(int hora) {
-        Cola<Viaje> temp = new Cola<>();
-        Cola<Viaje> mayor = new Cola<>();
+    public MaxColaCP<Viaje> clusterMayor(int hora) {
+        MaxColaCP<Viaje> temp = new MaxColaCP<>();
+        MaxColaCP<Viaje> mayor = new MaxColaCP<>();
 
-        while (datosCola.tamano() > 0) {
+        while (datosCola.darNumElementos() > 0) {
             if (datosCola.darPrimero().valor().darHora() < hora) {
-                datosCola.dequeue();
+                datosCola.sacarMax();
 
             } else {
 
-                temp.enqueu(datosCola.dequeue());
+                temp.agregar(datosCola.sacarMax());
 
-                while (datosCola.tamano() > 0 && temp.darUltimo().valor().darHora() < datosCola.darPrimero().valor().darHora()) {
+                while (datosCola.darNumElementos() > 0 && temp.darUltimo().valor().darHora() < datosCola.darPrimero().valor().darHora()) {
 
-                    temp.enqueu(datosCola.dequeue());
+                    temp.agregar(datosCola.sacarMax());
                 }
 
-                if (temp.tamano() > mayor.tamano()) {
+                if (temp.darNumElementos() > mayor.darNumElementos()) {
                     mayor = temp;
                 }
 
@@ -102,6 +103,24 @@ public class MVCModelo {
 
         }
     }
+    
+    public void generarMuestra(int cantidad)
+    {
+    	int inicial=0;
+    	double List[] = new double [cantidad];
+    	List[inicial] = datosCola.darPrimero().valor().darTiempoPromedio();
+    	for(int i= 1; i<cantidad; i++)
+    	{
+    		List[i]= datosCola.darPrimero().siguiente().valor().darTiempoPromedio();
+    		for(int j=0; j<1; j++)
+    		{
+    			if(List[i] == List[j])
+    			{
+    				i--;
+    			}
+    		}
+    	}
+    }
 
     /**
      * Requerimiento de agregar dato
@@ -109,7 +128,7 @@ public class MVCModelo {
      * @param dato
      */
     public void agregar(Viaje dato) {
-        datosCola.enqueu(dato);
+        datosCola.agregar(dato);
     }
 
     public Viaje crearViaje(String[] datos) {
@@ -118,7 +137,7 @@ public class MVCModelo {
 
 
 
-    public Cola<Viaje> darDatosCola() {
+    public MaxColaCP<Viaje> darDatosCola() {
         return datosCola;
     }
 
