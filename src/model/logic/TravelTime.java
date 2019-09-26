@@ -1,4 +1,4 @@
-package model.data_structures;
+package model.logic;
 
 public class TravelTime implements Comparable <TravelTime>
 {
@@ -14,16 +14,16 @@ public class TravelTime implements Comparable <TravelTime>
 	private double mean_travel_time;
 	
 	private double standard_deviation_travel_time;
-	
-	public TravelTime( int pTrimestre, int pSourceId, int pDistId, int pHod, double pMean_travel_time, double pStandard_deviation_travel_time)
-	{
-		trimestre = pTrimestre;
-		sourceId = pSourceId;
-		hod= pHod;
-		mean_travel_time= pMean_travel_time;
-		standard_deviation_travel_time= pStandard_deviation_travel_time;
+
+	public TravelTime(int trimestre, int sourceId, int distId, int hod, double mean_travel_time, double standard_deviation_travel_time) {
+		this.trimestre = trimestre;
+		this.sourceId = sourceId;
+		this.distId = distId;
+		this.hod = hod;
+		this.mean_travel_time = mean_travel_time;
+		this.standard_deviation_travel_time = standard_deviation_travel_time;
 	}
-	
+
 	public int darTimestre()
 	{
 		return trimestre;
