@@ -24,6 +24,9 @@ public class MVCModelo {
      * Atributos del modelo del mundo
      */
 
+    public final static String DATOS_PRIMER_SEMESTRE = "./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv";
+    public final static String DATOS_SEGUNDO_SEMESTRE = "./data/bogota-cadastral-2018-2-All-HourlyAggregate.csv";
+
     private ListaEncadenada<TravelTime> datos;
     private MaxColaCP<TravelTime> colaCP;
     private MaxHeapCP<TravelTime> heapCP;
@@ -37,9 +40,12 @@ public class MVCModelo {
     }
 
 
+    public void loadTravelTimes(){
+        cargar(DATOS_PRIMER_SEMESTRE, 1);
+        cargar(DATOS_SEGUNDO_SEMESTRE, 2);
+    }
 
-
-    public void loadTravelTimes(String ruta, int semestre) {
+    public void cargar(String ruta, int semestre) {
         CSVReader reader = null;
         try {
 
@@ -137,6 +143,7 @@ public class MVCModelo {
     }
 
     public double tiempoPromedioAgregarImplementacionHeap(){
+        heapCP = new MaxHeapCP<>(200000);
 
         TravelTime[] a = generarMuestraAleatorea(200000);
         Contador cont = new Contador();
@@ -150,6 +157,7 @@ public class MVCModelo {
     }
 
     public double tiempoPromedioSacarMaxImplementacionHeap(){
+        heapCP = new MaxHeapCP<>(200000);
 
         TravelTime[] a = generarMuestraAleatorea(200000);
 
@@ -170,6 +178,7 @@ public class MVCModelo {
 
 
     public double tiempoPromedioAgregarImplementacionCola(){
+        colaCP = new MaxColaCP();
 
         TravelTime[] a = generarMuestraAleatorea(200000);
         Contador cont = new Contador();
@@ -183,6 +192,8 @@ public class MVCModelo {
     }
 
     public double tiempoPromedioSacarMaxImplementacionCola(){
+
+        colaCP = new MaxColaCP();
 
         TravelTime[] a = generarMuestraAleatorea(200000);
 
@@ -212,4 +223,18 @@ public class MVCModelo {
             return (actual - inicio) ;
         }
     }
+
+
+
+        public static void main(String[] args)
+        {
+            MVCModelo modelo = new MVCModelo ();
+            modelo.loadTravelTimes();
+            System.out.println("Tiempo de agregar para cola: " +modelo.tiempoPromedioAgregarImplementacionCola());
+            System.out.println("Tiempo de sacar para cola: " +modelo.tiempoPromedioSacarMaxImplementacionCola());
+            System.out.println("Tiempo de agregar para heap: " +modelo.tiempoPromedioAgregarImplementacionHeap());
+            System.out.println("Tiempo de sacar para heap: " + modelo.tiempoPromedioSacarMaxImplementacionHeap());
+
+        }
+
 }
