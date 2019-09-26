@@ -51,20 +51,32 @@ public class MaxColaCP<E extends Comparable<E>> implements IMaxCP<E>
 			
 			temp.insertarSiguiente(ultimo);
 		}
-		else
-		{
-			Nodo<E> temp = ultimo.anterior();
+		else if (primero.valor().compareTo(valor) < 0 ){
+
+			Nodo<E> f = primero;
+			primero = new Nodo<>(valor, f, null);
+			f.insertarAnterior(primero);
+		}
+
+		else if(ultimo.valor().compareTo(valor) > 0 ){
+			Nodo<E> temp = ultimo;
+
+			ultimo = new Nodo(valor, null, temp);
+
+			temp.insertarSiguiente(ultimo);
+		}
+		else {
+			Nodo<E> temp = ultimo;
 			while(temp.valor().compareTo(valor) < 0)
 			{
-				temp =temp.anterior();
-				
+				temp = temp.anterior();
 			}
-			
-			
+
 			Nodo<E> nuevo = new Nodo(valor,temp.siguiente(),temp);
 			
 			temp.insertarSiguiente(nuevo);
 			nuevo.siguiente().insertarAnterior(nuevo);
+
 		}
 
 		tamano++;
@@ -157,7 +169,17 @@ public class MaxColaCP<E extends Comparable<E>> implements IMaxCP<E>
 		
 	}
 
+	public static void main(String[] args)
+	{
+		MaxColaCP<Integer> a = new MaxColaCP<>();
 
+		a.agregar(3);
+		a.agregar(4);
+		a.agregar(7);
+		a.agregar(9);
+		a.agregar(1);
+
+	}
 
 	
 }
