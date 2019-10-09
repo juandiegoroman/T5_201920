@@ -5,100 +5,76 @@ package model.data_structures;
 
 public class TablaHashSeparateChaining<Key, Value> {
 
-    private static final int CAPACIDAD_INICIAL = 4;
+    private static final int INITIAL_CAP = 4;
 
-    private int n;
+    private int size;
 
-    private int m;
+    private int keysNumber;
 
-    private ArrListas<Key, Value>[] st;
+    private LinkedKeyList<Key, Value>[] values;
 
 
 
     public TablaHashSeparateChaining() {
 
-        this(CAPACIDAD_INICIAL);
+        this(INITIAL_CAP);
 
     }
 
 
 
-    public TablaHashSeparateChaining(int m) {
+    public TablaHashSeparateChaining(int keysNumber) {
 
-        this.m = m;
+        this.keysNumber = keysNumber;
 
-        st = (ArrListas<Key, Value>[]) new ArrListas[m];
+        values = (LinkedKeyList<Key, Value>[]) new LinkedKeyList[keysNumber];
 
-        for (int i = 0; i < m; i++)
+        for (int i = 0; i < keysNumber; i++)
 
-            st[i] = new ArrListas<Key, Value>();
+            values[i] = new LinkedKeyList<Key, Value>();
 
     }
 
-    
+
     private void resize(int chains) {
 
         TablaHashSeparateChaining<Key, Value> temp = new TablaHashSeparateChaining<Key, Value>(chains);
 
-        for (int i = 0; i < m; i++) {
+        for (int i = 0; i < keysNumber; i++) {
 
-            for (Key key : st[i].keys()) {
+            for (Key key : values[i].keys()) {
 
-                temp.put(key, st[i].get(key));
+                temp.put(key, values[i].get(key));
 
             }
 
         }
 
-        this.m  = temp.m;
+        this.keysNumber = temp.keysNumber;
 
-        this.n  = temp.n;
+        this.size = temp.size;
 
-        this.st = temp.st;
+        this.values = temp.values;
 
     }
 
 
-
-    // hash value between 0 and m-1
 
     private int hash(Key key) {
 
-        return (key.hashCode() & 0x7fffffff) % m;
+        return (key.hashCode() & 0x7fffffff) % keysNumber;
 
     }
 
-
-
-    /**
-
-     * Returns the number of key-value pairs in this symbol table.
-
-     *
-
-     * @return the number of key-value pairs in this symbol table
-
-     */
 
     public int size() {
 
-        return n;
+        return size;
 
     }
 
 
 
-    /**
-
-     * Returns true if this symbol table is empty.
-
-     *
-
-     * @return {@code true} if this symbol table is empty;
-
-     *         {@code false} otherwise
-
-     */
 
     public boolean isEmpty() {
 
@@ -106,23 +82,6 @@ public class TablaHashSeparateChaining<Key, Value> {
 
     }
 
-
-
-    /**
-
-     * Returns true if this symbol table contains the specified key.
-
-     *
-
-     * @param  key the key
-
-     * @return {@code true} if this symbol table contains {@code key};
-
-     *         {@code false} otherwise
-
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-
-     */
 
     public boolean contains(Key key) {
 
@@ -134,53 +93,18 @@ public class TablaHashSeparateChaining<Key, Value> {
 
 
 
-    /**
-
-     * Returns the value associated with the specified key in this symbol table.
-
-     *
-
-     * @param  key the key
-
-     * @return the value associated with {@code key} in the symbol table;
-
-     *         {@code null} if no such value
-
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-
-     */
-
     public Value get(Key key) {
 
         if (key == null) throw new IllegalArgumentException("argument to get() is null");
 
         int i = hash(key);
 
-        return st[i].get(key);
+        return values[i].get(key);
 
     }
 
 
 
-    /**
-
-     * Inserts the specified key-value pair into the symbol table, overwriting the old
-
-     * value with the new value if the symbol table already contains the specified key.
-
-     * Deletes the specified key (and its associated value) from this symbol table
-
-     * if the specified value is {@code null}.
-
-     *
-
-     * @param  key the key
-
-     * @param  val the value
-
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-
-     */
 
     public void put(Key key, Value val) {
 
@@ -195,36 +119,18 @@ public class TablaHashSeparateChaining<Key, Value> {
         }
 
 
-
-        // double table size if average length of list >= 10
-
-        if (n >= 10*m) resize(2*m);
+        if (size / keysNumber>= 5) resize(2* keysNumber);
 
 
 
         int i = hash(key);
 
-        if (!st[i].contains(key)) n++;
+        if (!values[i].contains(key)) size++;
 
-        st[i].put(key, val);
+        values[i].put(key, val);
 
     }
 
-
-
-    /**
-
-     * Removes the specified key and its associated value from this symbol table
-
-     * (if the key is in this symbol table).
-
-     *
-
-     * @param  key the key
-
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-
-     */
 
     public void delete(Key key) {
 
@@ -234,29 +140,23 @@ public class TablaHashSeparateChaining<Key, Value> {
 
         int i = hash(key);
 
-        if (st[i].contains(key)) n--;
+        if (values[i].contains(key)) size--;
 
-        st[i].delete(key);
+        values[i].delete(key);
 
 
-
-        // halve table size if average length of list <= 2
-
-        if (m > CAPACIDAD_INICIAL && n <= 2*m) resize(m/2);
+        if (keysNumber > INITIAL_CAP && size <= 2* keysNumber) resize(keysNumber /2);
 
     }
 
-
-
-    // return keys in symbol table as an Iterable
 
     public Iterable<Key> keys() {
 
         ListaEncadenada<Key> lista = new ListaEncadenada<>();
 
-        for (int i = 0; i < m; i++) {
+        for (int i = 0; i < keysNumber; i++) {
 
-            for (Key key : st[i].keys())
+            for (Key key : values[i].keys())
 
                 lista.insertarFinal(key);
 

@@ -1,7 +1,7 @@
 package model.data_structures;
 
 
-public class ArrListas<Key, Value> {
+public class LinkedKeyList<Key, Value> {
 
     private int n;           // number of key-value pairs
 
@@ -41,7 +41,7 @@ public class ArrListas<Key, Value> {
 
      */
 
-    public ArrListas() {
+    public LinkedKeyList() {
 
     }
 
