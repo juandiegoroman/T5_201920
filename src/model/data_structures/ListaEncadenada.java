@@ -1,9 +1,10 @@
 package model.data_structures;
 
 import java.util.Comparator;
+import java.util.Iterator;
 
 // Linked List Class
-public class ListaEncadenada<E> {
+public class ListaEncadenada<E> implements Iterable<E>{
 
     private Nodo<E> actual;
 
@@ -12,6 +13,11 @@ public class ListaEncadenada<E> {
     private Nodo<E> ultimo;
 
     private int tamano;
+
+    @Override
+    public Iterator<E> iterator() {
+        return null;
+    }
 
     /* Node Class */
     public static class Nodo<E> {
@@ -59,14 +65,14 @@ public class ListaEncadenada<E> {
         tamano++;
     }
 
-    private class ListaIterador implements IListaIterador<E> {
+    private class ListaIterador implements Iterator<E> {
 
         ListaIterador() {
             actual = null;
         }
 
         @Override
-        public E siguiente() {
+        public E next() {
 
             if (actual == null) {
                 actual = primero;
@@ -79,8 +85,8 @@ public class ListaEncadenada<E> {
             return (actual != null) ? actual.valor : null;
         }
 
-
-        public boolean haySiguiente() {
+        @Override
+        public boolean hasNext() {
 
             if (primero == null) return false;
 
@@ -122,7 +128,7 @@ public class ListaEncadenada<E> {
     }
 
 
-    public IListaIterador<E> iterador() {
+    public Iterator<E> iterador() {
         return new ListaIterador();
     }
 
