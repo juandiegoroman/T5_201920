@@ -1,6 +1,8 @@
 package model.data_structures;
 
-public class TablaHashLinearProbing<Key, Value> 
+import java.util.Iterator;
+
+public class TablaHashLinearProbing<Key, Value> implements ITablasHash<Key,Value>
 {
 	private static final int CAPACIDAD_INICIAL = 4;
 
@@ -46,7 +48,7 @@ public class TablaHashLinearProbing<Key, Value>
         m    = temp.m;
     }
     
-
+@Override
     public void put(Key key, Value val) {
         if (key == null) throw new IllegalArgumentException("first argument to put() is null");
 
@@ -76,10 +78,11 @@ public class TablaHashLinearProbing<Key, Value>
                     return vals[i];
             return null;
         }
-        
-        public void delete(Key key) {
+        @Override
+        public Value delete(Key key) {
+        	Value rta = null;
             if (key == null) throw new IllegalArgumentException("argument to delete() is null");
-            if (!contains(key)) return;
+            if (!contains(key)) return null;
 
             int i = hash(key);
             while (!key.equals(keys[i])) {
@@ -92,6 +95,7 @@ public class TablaHashLinearProbing<Key, Value>
  
                 Key   keyToRehash = keys[i];
                 Value valToRehash = vals[i];
+                rta = vals[i];
                 keys[i] = null;
                 vals[i] = null;
                 n--;
@@ -105,13 +109,16 @@ public class TablaHashLinearProbing<Key, Value>
             if (n > 0 && n <= m/8) resize(m/2);
 
             assert check();
+            return rta;
         }
-        public Iterable<Key> keys() {
+        @Override
+        public Iterator<Key> keys() {
             ListaEncadenada<Key> queue = new ListaEncadenada<Key>();
             for (int i = 0; i < m; i++)
                 if (keys[i] != null) queue.insertarFinal(keys[i]);
-            return queue;
+            return (Iterator<Key>) queue;
         }
+        
         private boolean check() {
 
             // check that hash table is at most 50% full
@@ -132,5 +139,14 @@ public class TablaHashLinearProbing<Key, Value>
 	private int hash(Key key) {
         return (key.hashCode() & 0x7fffffff) % m;
     }
+
+
+
+
+
+
+
+
+	
     
 }

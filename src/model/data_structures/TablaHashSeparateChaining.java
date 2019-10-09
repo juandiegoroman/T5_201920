@@ -1,9 +1,10 @@
 
 package model.data_structures;
 
+import java.util.Iterator;
 
-
-public class TablaHashSeparateChaining<Key, Value> {
+public class TablaHashSeparateChaining<Key, Value> implements ITablasHash<Key,Value>
+{
 
     private static final int INITIAL_CAP = 4;
 
@@ -132,8 +133,9 @@ public class TablaHashSeparateChaining<Key, Value> {
     }
 
 
-    public void delete(Key key) {
+    public Value delete(Key key) {
 
+    	Value rta= null;
         if (key == null) throw new IllegalArgumentException("argument to delete() is null");
 
 
@@ -141,16 +143,19 @@ public class TablaHashSeparateChaining<Key, Value> {
         int i = hash(key);
 
         if (values[i].contains(key)) size--;
-
+        rta= values[i].get(key);
         values[i].delete(key);
 
 
         if (keysNumber > INITIAL_CAP && size <= 2* keysNumber) resize(keysNumber /2);
 
+        
+        
+        return rta;
     }
 
 
-    public Iterable<Key> keys() {
+    public Iterator<Key> keys() {
 
         ListaEncadenada<Key> lista = new ListaEncadenada<>();
 
@@ -162,7 +167,7 @@ public class TablaHashSeparateChaining<Key, Value> {
 
         }
 
-        return lista;
+        return (Iterator<Key>) lista;
 
     }
 
