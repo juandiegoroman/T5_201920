@@ -10,9 +10,7 @@ import java.util.Random;
 
 import com.opencsv.CSVReader;
 
-import jdk.management.resource.internal.inst.FileOutputStreamRMHooks;
 import model.data_structures.*;
-import model.data_structures.QuickSort;
 
 
 /**
@@ -27,7 +25,7 @@ public class MVCModelo {
     public final static String DATOS_SEGUNDO_SEMESTRE = "./data/bogota-cadastral-2018-2-WeeklyAggregate.csv";
     public final static String DATOS_TERCER_SEMESTRE = "./data/bogota-cadastral-2018-3-WeeklyAggregate.csv";
     public final static String DATOS_CUARTO_SEMESTRE = "./data/bogota-cadastral-2018-4-WeeklyAggregate.csv";
-    public final static int CANTIDADE_EXISTENTE = 8000;
+    public final static int CANTIDAD_EXISTENTE = 8000;
     public final static int CANTIDAD_NO_EXISTENTE = 2000;
 
     private ListaEncadenada<TravelTime> datos;
@@ -52,7 +50,6 @@ public class MVCModelo {
         cargar(DATOS_TERCER_SEMESTRE, 3);
         cargar(DATOS_CUARTO_SEMESTRE, 4);
 
-        muestraAleatorea = generarMuestraAleatorea(CANTIDAD);
     }
 
     public void cargar(String ruta, int semestre) {
@@ -92,19 +89,23 @@ public class MVCModelo {
     public  TravelTime[] generarMuestraAleatorea(){
 
         TravelTime[] arr = convertirAArreglo(datos);
-        TravelTime[] arr2 = new TravelTime[CANTIDADE_EXISTENTE + CANTIDAD_NO_EXISTENTE];
+        TravelTime[] arr2 = new TravelTime[CANTIDAD_EXISTENTE + CANTIDAD_NO_EXISTENTE];
 
         mezclarAleatoreamente(arr);
 
         int cont = 0;
 
-        for (int i = 0; i < CANTIDADE_EXISTENTE ; i++) {
-
+        for (int i = 0; i < CANTIDAD_EXISTENTE; i++) {
+            arr2[i] = arr[i];
         }
 
+        for (int i = CANTIDAD_EXISTENTE; i < CANTIDAD_NO_EXISTENTE + CANTIDAD_EXISTENTE; i++) {
+            arr2[i] = new TravelTime(-10 *(int) Math.random(), -10 * (int)Math.random(),-10 *(int) Math.random(),-10 * (int)Math.random(),-10 * Math.random(),-10 * Math.random());
+        }
 
+        mezclarAleatoreamente(arr2);
 
-        return a;
+        return arr2;
     }
 
     private static void mezclarAleatoreamente(Object[] a) {
@@ -251,70 +252,63 @@ public class MVCModelo {
         return datos;
     }
 
-    public double tiempoPromedioAgregarImplementacionHeap(){
-        heapCP = new MaxHeapCP<>(CANTIDAD);
+    public String tiemposGetSC(){
 
-        Contador cont = new Contador();
+        TravelTime[] muestraAleatroea = generarMuestraAleatorea();
 
-        for (TravelTime tiempoDeViaje: muestraAleatorea) {
-            heapCP.agregar(tiempoDeViaje);
-        }
-        double total = cont.duracion();
-
-        return total / CANTIDAD;
-    }
-
-    public double tiempoPromedioSacarMaxImplementacionHeap(){
-        heapCP = new MaxHeapCP<>(CANTIDAD);
+        double max = 0;
+        double min = Double.MAX_VALUE;
+        double total = 0;
+        double promedio = 0;
 
         for (TravelTime tiempoDeViaje: muestraAleatorea) {
-            heapCP.agregar(tiempoDeViaje);
+
+            Contador cont = new Contador();
+            tablaHashSC.get(darLlave(tiempoDeViaje));
+            double contTemp = cont.duracion();
+
+            if (contTemp > max) max = contTemp;
+
+            if (contTemp < min) min = contTemp;
+
+            total+= contTemp;
+
         }
 
-        Contador cont = new Contador();
+        promedio = total / (CANTIDAD_NO_EXISTENTE + CANTIDAD_EXISTENTE)
 
-        while (!heapCP.esVacia()){
-            heapCP.sacarMax();
-        }
-        double total = cont.duracion();
-
-        return total / CANTIDAD;
+        return "Max: " + max + " Min: " + min + " Prom: " + promedio ;
     }
 
+    public String tiemposGetSC(){
 
-    public double tiempoPromedioAgregarImplementacionCola(){
-        colaCP = new MaxColaCP();
+        TravelTime[] muestraAleatroea = generarMuestraAleatorea();
 
-        Contador cont = new Contador();
+        double max = 0;
+        double min = Double.MAX_VALUE;
+        double total = 0;
+        double promedio = 0;
 
         for (TravelTime tiempoDeViaje: muestraAleatorea) {
-            colaCP.agregar(tiempoDeViaje);
-        }
-        double total = cont.duracion();
 
-        return total / CANTIDAD;
+            Contador cont = new Contador();
+            tablaHashLP.get(darLlave(tiempoDeViaje));
+            double contTemp = cont.duracion();
+
+            if (contTemp > max) max = contTemp;
+
+            if (contTemp < min) min = contTemp;
+
+            total+= contTemp;
+
+        }
+
+        promedio = total / (CANTIDAD_NO_EXISTENTE + CANTIDAD_EXISTENTE)
+
+        return "Max: " + max + " Min: " + min + " Prom: " + promedio ;
     }
 
-    public double tiempoPromedioSacarMaxImplementacionCola(){
-
-        colaCP = new MaxColaCP();
-
-
-        for (TravelTime tiempoDeViaje: muestraAleatorea) {
-            colaCP.agregar(tiempoDeViaje);
-        }
-
-        Contador cont = new Contador();
-
-        while (!colaCP.esVacia()){
-            colaCP.sacarMax();
-        }
-
-        double total = cont.duracion();
-
-        return total / CANTIDAD;
-    }
-
+    
     public class Contador
     {
         private final long inicio;
