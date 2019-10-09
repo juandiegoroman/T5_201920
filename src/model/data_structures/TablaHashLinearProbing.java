@@ -2,7 +2,7 @@ package model.data_structures;
 
 import java.util.Iterator;
 
-public class TablaHashLinearProbing<Key, Value> implements ITablasHash<Key,Value>
+public class TablaHashLinearProbing<Key extends Comparable, Value> implements ITablasHash<Key,Value>
 {
 	private static final int CAPACIDAD_INICIAL = 4;
 

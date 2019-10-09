@@ -3,7 +3,7 @@ package model.data_structures;
 
 import java.util.Iterator;
 
-public class TablaHashSeparateChaining<Key, Value> implements ITablasHash<Key,Value>
+public class TablaHashSeparateChaining<Key extends Comparable, Value> implements ITablasHash<Key,Value>
 {
 
     private static final int INITIAL_CAP = 4;
