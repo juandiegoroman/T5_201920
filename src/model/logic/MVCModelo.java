@@ -1,6 +1,7 @@
 package model.logic;
 
 
+import java.io.DataOutput;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -22,14 +23,18 @@ public class MVCModelo {
      * Atributos del modelo del mundo
      */
 
-    public final static String DATOS_PRIMER_SEMESTRE = "./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv";
-    public final static String DATOS_SEGUNDO_SEMESTRE = "./data/bogota-cadastral-2018-2-All-HourlyAggregate.csv";
+    public final static String DATOS_PRIMER_SEMESTRE = "./data/bogota-cadastral-2018-1-WeeklyAggregate.csv";
+    public final static String DATOS_SEGUNDO_SEMESTRE = "./data/bogota-cadastral-2018-2-WeeklyAggregate.csv";
+    public final static String DATOS_TERCER_SEMESTRE = "./data/bogota-cadastral-2018-3-WeeklyAggregate.csv";
+    public final static String DATOS_CUARTO_SEMESTRE = "./data/bogota-cadastral-2018-4-WeeklyAggregate.csv";
     public final static int CANTIDAD = 200000;
 
     private ListaEncadenada<TravelTime> datos;
     private MaxColaCP<TravelTime> colaCP;
     private MaxHeapCP<TravelTime> heapCP;
     private TravelTime[] muestraAleatorea;
+
+    private TablaHashSeparateChaining<String, Double> tablaHashSH;
 
 
     /**
@@ -44,6 +49,9 @@ public class MVCModelo {
     public void loadTravelTimes(){
         cargar(DATOS_PRIMER_SEMESTRE, 1);
         cargar(DATOS_SEGUNDO_SEMESTRE, 2);
+        cargar(DATOS_TERCER_SEMESTRE, 3);
+        cargar(DATOS_CUARTO_SEMESTRE, 4);
+
         muestraAleatorea = generarMuestraAleatorea(CANTIDAD);
     }
 
@@ -131,11 +139,11 @@ public class MVCModelo {
 
         int cont = 0;
 
-        IListaIterador<TravelTime> iter = lista.iterador();
+        Iterator<TravelTime> iter = lista.iterador();
 
-        while(iter.haySiguiente())
+        while(iter.hasNext())
         {
-            Comparable actual = iter.siguiente();
+            Comparable actual = iter.next();
             arr[cont] = (Comparable) actual;
             cont++;
         }
@@ -154,6 +162,36 @@ public class MVCModelo {
     public TravelTime crearViaje(String[] datos, int semestre) {
         return new TravelTime(semestre, Integer.valueOf(datos[0]), Integer.valueOf(datos[1]), Integer.valueOf(datos[2]), Double.valueOf(datos[3]), Double.valueOf(datos[4]));
     }
+
+
+    public void cargarTablaHashSeparateChaining(){
+
+        tablaHashSH = new TablaHashSeparateChaining<>();
+
+
+        Iterator<TravelTime> iter = datos.iterador();
+
+        while(iter.hasNext())
+        {
+            TravelTime actual = iter.next();
+            tablaHashSH.put(actual.darTimestre() + "-" + actual.darSourceId() + "-" + actual.darDistId(), actual.darMeanTravelTime());
+        }
+
+    }
+
+    public ListaEncadenada<TravelTime> buscarPorTrimestreOrigenYDestino(int tri, int org, int dst) {
+
+            tablaHashSH.get(tri + "-" + org + "-" + dst);
+
+    }
+
+
+
+
+
+
+
+
 
 
 
