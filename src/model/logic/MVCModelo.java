@@ -10,6 +10,7 @@ import java.util.Random;
 
 import com.opencsv.CSVReader;
 
+import jdk.management.resource.internal.inst.FileOutputStreamRMHooks;
 import model.data_structures.*;
 import model.data_structures.QuickSort;
 
@@ -26,15 +27,14 @@ public class MVCModelo {
     public final static String DATOS_SEGUNDO_SEMESTRE = "./data/bogota-cadastral-2018-2-WeeklyAggregate.csv";
     public final static String DATOS_TERCER_SEMESTRE = "./data/bogota-cadastral-2018-3-WeeklyAggregate.csv";
     public final static String DATOS_CUARTO_SEMESTRE = "./data/bogota-cadastral-2018-4-WeeklyAggregate.csv";
-    public final static int CANTIDAD = 200000;
+    public final static int CANTIDADE_EXISTENTE = 8000;
+    public final static int CANTIDAD_NO_EXISTENTE = 2000;
 
     private ListaEncadenada<TravelTime> datos;
-    private MaxColaCP<TravelTime> colaCP;
-    private MaxHeapCP<TravelTime> heapCP;
     private TravelTime[] muestraAleatorea;
 
-    private TablaHashSeparateChaining<String, TravelTime> tablaHashSC;
-    private TablaHashLinearProbing<String, TravelTime> tablaHashLP;
+    private TablaHashSeparateChaining<String, ListaEncadenada<TravelTime>> tablaHashSC;
+    private TablaHashLinearProbing<String, ListaEncadenada<TravelTime>> tablaHashLP;
 
 
     /**
@@ -89,25 +89,20 @@ public class MVCModelo {
     }
 
 
-    public  TravelTime[] generarMuestraAleatorea(int n){
+    public  TravelTime[] generarMuestraAleatorea(){
 
-        TravelTime[] a = new TravelTime[n];
+        TravelTime[] arr = convertirAArreglo(datos);
+        TravelTime[] arr2 = new TravelTime[CANTIDADE_EXISTENTE + CANTIDAD_NO_EXISTENTE];
 
-        Comparable[] arr = convertirAArreglo(datos);
-
-        QuickSort.ordenar(arr);
-
+        mezclarAleatoreamente(arr);
 
         int cont = 0;
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < CANTIDADE_EXISTENTE ; i++) {
 
-            while (arr[cont] == arr[++cont])
-
-            a[i] = (TravelTime) arr[cont];
         }
 
-        mezclarAleatoreamente(a);
+
 
         return a;
     }
@@ -124,18 +119,16 @@ public class MVCModelo {
         }
     }
 
-    private class ComparadorTiempoPromedio implements Comparator<TravelTime> {
-        @Override
-        public int compare(TravelTime o1, TravelTime o2) {
-            if (o1.darMeanTravelTime() < o2.darMeanTravelTime()) return -1;
-            if (o1.darMeanTravelTime() > o2.darMeanTravelTime()) return 1;
-            else return 0;
-        }
-    }
 
-    private Comparable[] convertirAArreglo(ListaEncadenada<TravelTime> lista) {
 
-        Comparable[] arr = new Comparable[lista.tamano()];
+
+
+
+
+
+    private TravelTime[] convertirAArreglo(ListaEncadenada<TravelTime> lista) {
+
+        TravelTime[] arr = new TravelTime[lista.tamano()];
 
         int cont = 0;
 
@@ -143,8 +136,8 @@ public class MVCModelo {
 
         while(iter.hasNext())
         {
-            Comparable actual = iter.next();
-            arr[cont] = (Comparable) actual;
+            TravelTime actual = iter.next();
+            arr[cont] =  actual;
             cont++;
         }
         return arr;
@@ -163,6 +156,11 @@ public class MVCModelo {
         return new TravelTime(semestre, Integer.valueOf(datos[0]), Integer.valueOf(datos[1]), Integer.valueOf(datos[2]), Double.valueOf(datos[3]), Double.valueOf(datos[4]));
     }
 
+    public String darLlave(TravelTime viaje){
+
+        return viaje.darTimestre() + "-" + viaje.darSourceId() + "-" + viaje.darDistId();
+    }
+
 
     public void cargarTablaHashSeparateChaining(){
 
@@ -174,7 +172,18 @@ public class MVCModelo {
         while(iter.hasNext())
         {
             TravelTime actual = iter.next();
-            tablaHashSC.put(actual.darTimestre() + "-" + actual.darSourceId() + "-" + actual.darDistId() + "-" + actual.darDow(), actual);
+
+            ListaEncadenada<TravelTime> lista = tablaHashSC.get(darLlave(actual));
+
+            if (lista == null) {
+                lista = new ListaEncadenada<>();
+                lista.insertarFinal(actual);
+            }
+            else {
+                lista.insertarFinal(actual);
+            }
+
+            tablaHashSC.put(darLlave(actual), lista);
         }
 
     }
@@ -188,36 +197,50 @@ public class MVCModelo {
         while(iter.hasNext())
         {
             TravelTime actual = iter.next();
-            tablaHashLP.put(actual.darTimestre() + "-" + actual.darSourceId() + "-" + actual.darDistId() + "-" + actual.darDow(), actual);
+
+            ListaEncadenada<TravelTime> lista = tablaHashLP.get(darLlave(actual));
+
+            if (lista == null) {
+                lista = new ListaEncadenada<>();
+                lista.insertarFinal(actual);
+            }
+            else {
+                lista.insertarFinal(actual);
+            }
+
+            tablaHashLP.put(darLlave(actual), lista);
         }
 
     }
+
+
+    private class ComparadorPorDia implements Comparator<TravelTime> {
+        @Override
+        public int compare(TravelTime o1, TravelTime o2) {
+            if (o1.darDow() < o2.darDow()) return -1;
+            if (o1.darDow() > o2.darDow()) return 1;
+            else return 0;
+        }
+    }
+
 
     public ListaEncadenada<TravelTime> buscarPorTrimestreOrigenYDestinoSC(int tri, int org, int dst) {
 
-        ListaEncadenada<TravelTime> lista = new ListaEncadenada<>();
+        ListaEncadenada<TravelTime> lista = tablaHashSC.get(tri + "-" + org + "-" + dst);
+        lista.ordenarPorMergeSort(new ComparadorPorDia());
 
-        for (int i = 0; i < 7; i++) {
-            lista.insertarFinal(tablaHashSC.get(tri + "-" + org + "-" + dst + "-" + (1 + i)));
-        }
+        return lista;
 
-    return lista;
     }
+
 
     public ListaEncadenada<TravelTime> buscarPorTrimestreOrigenYDestinoLP(int tri, int org, int dst) {
 
-        ListaEncadenada<TravelTime> lista = new ListaEncadenada<>();
+        ListaEncadenada<TravelTime> lista = tablaHashLP.get(tri + "-" + org + "-" + dst);
+        lista.ordenarPorMergeSort(new ComparadorPorDia());
 
-        for (int i = 0; i < 7; i++) {
-            lista.insertarFinal(tablaHashLP.get(tri + "-" + org + "-" + dst + "-" + (1 + i)));
-        }
         return lista;
     }
-
-
-
-
-
 
 
 
