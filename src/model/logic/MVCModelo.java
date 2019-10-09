@@ -308,7 +308,7 @@ public class MVCModelo {
         return "Max: " + max + " Min: " + min + " Prom: " + promedio ;
     }
 
-    
+
     public class Contador
     {
         private final long inicio;
@@ -328,10 +328,7 @@ public class MVCModelo {
             MVCModelo modelo = new MVCModelo ();
             modelo.loadTravelTimes();
             System.out.println("Tiempo de agregar para cola: " +modelo.tiempoPromedioAgregarImplementacionCola());
-            System.out.println("Tiempo de sacar para cola: " +modelo.tiempoPromedioSacarMaxImplementacionCola());
-            System.out.println("Tiempo de agregar para heap: " +modelo.tiempoPromedioAgregarImplementacionHeap());
-            System.out.println("Tiempo de sacar para heap: " + modelo.tiempoPromedioSacarMaxImplementacionHeap());
-
+            
         }
 
 }
