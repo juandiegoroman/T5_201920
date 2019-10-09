@@ -1,7 +1,6 @@
 package model.logic;
 
 
-import java.io.DataOutput;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -34,7 +33,8 @@ public class MVCModelo {
     private MaxHeapCP<TravelTime> heapCP;
     private TravelTime[] muestraAleatorea;
 
-    private TablaHashSeparateChaining<String, Double> tablaHashSH;
+    private TablaHashSeparateChaining<String, TravelTime> tablaHashSC;
+    private TablaHashLinearProbing<String, TravelTime> tablaHashLP;
 
 
     /**
@@ -166,7 +166,7 @@ public class MVCModelo {
 
     public void cargarTablaHashSeparateChaining(){
 
-        tablaHashSH = new TablaHashSeparateChaining<>();
+        tablaHashSC = new TablaHashSeparateChaining<>();
 
 
         Iterator<TravelTime> iter = datos.iterador();
@@ -174,15 +174,44 @@ public class MVCModelo {
         while(iter.hasNext())
         {
             TravelTime actual = iter.next();
-            tablaHashSH.put(actual.darTimestre() + "-" + actual.darSourceId() + "-" + actual.darDistId(), actual.darMeanTravelTime());
+            tablaHashSC.put(actual.darTimestre() + "-" + actual.darSourceId() + "-" + actual.darDistId() + "-" + actual.darDow(), actual);
         }
 
     }
 
-    public ListaEncadenada<TravelTime> buscarPorTrimestreOrigenYDestino(int tri, int org, int dst) {
+    public void cargarTablaLinearProbing(){
 
-            tablaHashSH.get(tri + "-" + org + "-" + dst);
+        tablaHashLP = new TablaHashLinearProbing<>();
 
+        Iterator<TravelTime> iter = datos.iterador();
+
+        while(iter.hasNext())
+        {
+            TravelTime actual = iter.next();
+            tablaHashLP.put(actual.darTimestre() + "-" + actual.darSourceId() + "-" + actual.darDistId() + "-" + actual.darDow(), actual);
+        }
+
+    }
+
+    public ListaEncadenada<TravelTime> buscarPorTrimestreOrigenYDestinoSC(int tri, int org, int dst) {
+
+        ListaEncadenada<TravelTime> lista = new ListaEncadenada<>();
+
+        for (int i = 0; i < 7; i++) {
+            lista.insertarFinal(tablaHashSC.get(tri + "-" + org + "-" + dst + "-" + (1 + i)));
+        }
+
+    return lista;
+    }
+
+    public ListaEncadenada<TravelTime> buscarPorTrimestreOrigenYDestinoLP(int tri, int org, int dst) {
+
+        ListaEncadenada<TravelTime> lista = new ListaEncadenada<>();
+
+        for (int i = 0; i < 7; i++) {
+            lista.insertarFinal(tablaHashLP.get(tri + "-" + org + "-" + dst + "-" + (1 + i)));
+        }
+        return lista;
     }
 
 
