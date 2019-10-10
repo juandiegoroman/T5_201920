@@ -93,11 +93,11 @@ public class Controller {
 
                 case 3:
 
-                    System.out.println("Se hallaron los siguientes tiempos  usando Linear Probing para calcular 8000 consultas aleatoreas: ");
+                    System.out.println("Se hallaron los siguientes tiempos  usando Linear Probing para calcular 10000 consultas aleatoreas: ");
 
                    System.out.println(modelo.tiemposGetLP());
                     System.out.println();
-                    System.out.println("Se hallaron los siguientes tiempos  usando Separate Chaining para calcular 8000 consultas aleatoreas: ");
+                    System.out.println("Se hallaron los siguientes tiempos  usando Separate Chaining para calcular 10000 consultas aleatoreas: ");
 
                    System.out.println(modelo.tiemposGetSC());
                     System.out.println();
