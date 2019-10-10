@@ -251,69 +251,7 @@ public class MVCModelo {
         return datos;
     }
 
-    public double tiempoPromedioAgregarImplementacionHeap(){
-        heapCP = new MaxHeapCP<>(CANTIDAD);
 
-        Contador cont = new Contador();
-
-        for (TravelTime tiempoDeViaje: muestraAleatorea) {
-            heapCP.agregar(tiempoDeViaje);
-        }
-        double total = cont.duracion();
-
-        return total / CANTIDAD;
-    }
-
-    public double tiempoPromedioSacarMaxImplementacionHeap(){
-        heapCP = new MaxHeapCP<>(CANTIDAD);
-
-        for (TravelTime tiempoDeViaje: muestraAleatorea) {
-            heapCP.agregar(tiempoDeViaje);
-        }
-
-        Contador cont = new Contador();
-
-        while (!heapCP.esVacia()){
-            heapCP.sacarMax();
-        }
-        double total = cont.duracion();
-
-        return total / CANTIDAD;
-    }
-
-
-    public double tiempoPromedioAgregarImplementacionCola(){
-        colaCP = new MaxColaCP();
-
-        Contador cont = new Contador();
-
-        for (TravelTime tiempoDeViaje: muestraAleatorea) {
-            colaCP.agregar(tiempoDeViaje);
-        }
-        double total = cont.duracion();
-
-        return total / CANTIDAD;
-    }
-
-    public double tiempoPromedioSacarMaxImplementacionCola(){
-
-        colaCP = new MaxColaCP();
-
-
-        for (TravelTime tiempoDeViaje: muestraAleatorea) {
-            colaCP.agregar(tiempoDeViaje);
-        }
-
-        Contador cont = new Contador();
-
-        while (!colaCP.esVacia()){
-            colaCP.sacarMax();
-        }
-
-        double total = cont.duracion();
-
-        return total / CANTIDAD;
-    }
 
     public class Contador
     {
