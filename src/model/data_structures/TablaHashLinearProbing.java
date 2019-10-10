@@ -2,12 +2,12 @@ package model.data_structures;
 
 import java.util.Iterator;
 
-public class TablaHashLinearProbing<Key extends Comparable, Value> implements ITablasHash<Key,Value>
+public class TablaHashLinearProbing<Key , Value> implements ITablasHash<Key ,Value>
 {
 	private static final int CAPACIDAD_INICIAL = 4;
 
-    private int n;           
-    private int m;           
+    private int n;
+    private int m;
     private Key[] keys;      
     private Value[] vals;  
     
@@ -24,8 +24,14 @@ public class TablaHashLinearProbing<Key extends Comparable, Value> implements IT
     }
     
     public int size() {
+        return m;
+    }
+
+    public int numKeys() {
         return n;
     }
+
+
     
     public boolean isEmpty() {
         return size() == 0;
