@@ -3,13 +3,13 @@ package model.data_structures;
 
 public class LinkedKeyList<Key, Value> {
 
-    private int n;           // number of key-value pairs
+    private int n;
 
-    private Node first;      // the linked list of key-value pairs
+    private Node first;
 
 
 
-    // a helper linked list data type
+
 
     private class Node {
 
@@ -35,11 +35,6 @@ public class LinkedKeyList<Key, Value> {
 
 
 
-    /**
-
-     * Initializes an empty symbol table.
-
-     */
 
     public LinkedKeyList() {
 
@@ -47,15 +42,6 @@ public class LinkedKeyList<Key, Value> {
 
 
 
-    /**
-
-     * Returns the number of key-value pairs in this symbol table.
-
-     *
-
-     * @return the number of key-value pairs in this symbol table
-
-     */
 
     public int size() {
 
@@ -65,17 +51,6 @@ public class LinkedKeyList<Key, Value> {
 
 
 
-    /**
-
-     * Returns true if this symbol table is empty.
-
-     *
-
-     * @return {@code true} if this symbol table is empty;
-
-     *         {@code false} otherwise
-
-     */
 
     public boolean isEmpty() {
 
@@ -85,21 +60,7 @@ public class LinkedKeyList<Key, Value> {
 
 
 
-    /**
 
-     * Returns true if this symbol table contains the specified key.
-
-     *
-
-     * @param  key the key
-
-     * @return {@code true} if this symbol table contains {@code key};
-
-     *         {@code false} otherwise
-
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-
-     */
 
     public boolean contains(Key key) {
 
@@ -111,21 +72,6 @@ public class LinkedKeyList<Key, Value> {
 
 
 
-    /**
-
-     * Returns the value associated with the given key in this symbol table.
-
-     *
-
-     * @param  key the key
-
-     * @return the value associated with the given key if the key is in the symbol table
-
-     *     and {@code null} if the key is not in the symbol table
-
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-
-     */
 
     public Value get(Key key) {
 
@@ -145,25 +91,6 @@ public class LinkedKeyList<Key, Value> {
 
 
 
-    /**
-
-     * Inserts the specified key-value pair into the symbol table, overwriting the old
-
-     * value with the new value if the symbol table already contains the specified key.
-
-     * Deletes the specified key (and its associated value) from this symbol table
-
-     * if the specified value is {@code null}.
-
-     *
-
-     * @param  key the key
-
-     * @param  val the value
-
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-
-     */
 
     public void put(Key key, Value val) {
 
@@ -199,19 +126,6 @@ public class LinkedKeyList<Key, Value> {
 
 
 
-    /**
-
-     * Removes the specified key and its associated value from this symbol table
-
-     * (if the key is in this symbol table).
-
-     *
-
-     * @param  key the key
-
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-
-     */
 
     public void delete(Key key) {
 
@@ -222,10 +136,6 @@ public class LinkedKeyList<Key, Value> {
     }
 
 
-
-    // delete key in linked list beginning at Node x
-
-    // warning: function call stack too large if table is large
 
     private Node delete(Node x, Key key) {
 
@@ -248,20 +158,6 @@ public class LinkedKeyList<Key, Value> {
 
 
 
-
-    /**
-
-     * Returns all keys in the symbol table as an {@code Iterable}.
-
-     * To iterate over all of the keys in the symbol table named {@code st},
-
-     * use the foreach notation: {@code for (Key key : st.keys())}.
-
-     *
-
-     * @return all keys in the symbol table
-
-     */
 
     public Iterable<Key> keys()  {
 
