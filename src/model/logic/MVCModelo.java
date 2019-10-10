@@ -46,8 +46,8 @@ public class MVCModelo {
 
         String info =   cargar(DATOS_PRIMER_SEMESTRE, 1) + cargar(DATOS_SEGUNDO_SEMESTRE, 2)+ cargar(DATOS_TERCER_SEMESTRE, 3) + cargar(DATOS_CUARTO_SEMESTRE, 4);
 
-        cargarTablaLinearProbing();
-        cargarTablaHashSeparateChaining();
+        info+=  "Linear Probing: "+cargarTablaLinearProbing() + "\n";
+       info+= "Separate chaining: "+cargarTablaHashSeparateChaining() + "\n";
 
         return info;
     }
@@ -175,10 +175,14 @@ public class MVCModelo {
     }
 
 
-    public void cargarTablaHashSeparateChaining(){
+    public String cargarTablaHashSeparateChaining(){
 
-        tablaHashSC = new TablaHashSeparateChaining<>();
+        String res = "";
 
+        tablaHashSC = new TablaHashSeparateChaining<>(100);
+
+        int tamanoInicial = tablaHashSC.size();
+        int numRehashes = 0;
 
         Iterator<TravelTime> iter = datos.iterator();
 
@@ -196,14 +200,28 @@ public class MVCModelo {
                 lista.insertarFinal(actual);
             }
 
+            int tamanoTemp = tablaHashSC.size();
+
             tablaHashSC.put(darLlave(actual), lista);
+
+            if (tamanoTemp != tablaHashSC.size())  numRehashes++;
         }
+
+        res = "N: " + tablaHashSC.numKeys() + ", M Inicial: " + tamanoInicial + ", M Final: " + tablaHashSC.size() + ", N/M: " + (double)tablaHashSC.numKeys()/ (double)tablaHashSC.size() + ", Num Rehashes: " + numRehashes;
+
+        return  res;
+
 
     }
 
-    public void cargarTablaLinearProbing(){
+    public String cargarTablaLinearProbing(){
 
-        tablaHashLP = new TablaHashLinearProbing<>();
+        String res = "";
+
+        tablaHashLP = new TablaHashLinearProbing<>(100);
+
+        int tamanoInicial = tablaHashLP.size();
+        int numRehashes = 0;
 
         Iterator<TravelTime> iter = datos.iterator();
 
@@ -221,9 +239,16 @@ public class MVCModelo {
                 lista.insertarFinal(actual);
             }
 
+            int tamanoTemp = tablaHashLP.size();
+
             tablaHashLP.put(darLlave(actual), lista);
+
+            if (tamanoTemp != tablaHashLP.size())  numRehashes++;
         }
 
+        res = "N: " + tablaHashLP.numKeys() + ", M Inicial: " + tamanoInicial + ", M Final: " + tablaHashLP.size() + ", N/M: " + (double)tablaHashLP.numKeys()/ (double)tablaHashLP.size() + ", Num Rehashes: " + numRehashes;
+
+   return  res;
     }
 
 
