@@ -25,8 +25,8 @@ public class MVCModelo {
     public final static String DATOS_SEGUNDO_SEMESTRE = "./data/bogota-cadastral-2018-2-WeeklyAggregate.csv";
     public final static String DATOS_TERCER_SEMESTRE = "./data/bogota-cadastral-2018-3-WeeklyAggregate.csv";
     public final static String DATOS_CUARTO_SEMESTRE = "./data/bogota-cadastral-2018-4-WeeklyAggregate.csv";
-    public final static int CANTIDAD_EXISTENTE = 30;
-    public final static int CANTIDAD_NO_EXISTENTE = 10;
+    public final static int CANTIDAD_EXISTENTE = 8000;
+    public final static int CANTIDAD_NO_EXISTENTE = 2000;
 
     private ListaEncadenada<TravelTime> datos;
     private TablaHashSeparateChaining<String, ListaEncadenada<TravelTime>> tablaHashSC;
@@ -326,6 +326,8 @@ public class MVCModelo {
         double total = 0;
         double promedio = 0;
 
+
+        Contador conTotal = new Contador();
         for (TravelTime tiempoDeViaje: muestraAleatorea) {
 
             Contador cont = new Contador();
@@ -336,9 +338,8 @@ public class MVCModelo {
 
             if (contTemp < min) min = contTemp;
 
-            total+= contTemp;
-
         }
+        total = conTotal.duracion();
 
         promedio = total / (CANTIDAD_NO_EXISTENTE + CANTIDAD_EXISTENTE);
 
