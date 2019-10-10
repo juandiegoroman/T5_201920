@@ -8,9 +8,9 @@ public class TablaHashSeparateChaining<Key, Value> implements ITablasHash<Key,Va
 
     private static final int INITIAL_CAP = 4;
 
-    private int size;
-
     private int keysNumber;
+
+    private int size;
 
     private LinkedKeyList<Key, Value>[] values;
 
@@ -24,13 +24,13 @@ public class TablaHashSeparateChaining<Key, Value> implements ITablasHash<Key,Va
 
 
 
-    public TablaHashSeparateChaining(int keysNumber) {
+    public TablaHashSeparateChaining(int size) {
 
-        this.keysNumber = keysNumber;
+        this.size = size;
 
-        values = (LinkedKeyList<Key, Value>[]) new LinkedKeyList[keysNumber];
+        values = (LinkedKeyList<Key, Value>[]) new LinkedKeyList[size];
 
-        for (int i = 0; i < keysNumber; i++)
+        for (int i = 0; i < size; i++)
 
             values[i] = new LinkedKeyList<Key, Value>();
 
@@ -41,7 +41,7 @@ public class TablaHashSeparateChaining<Key, Value> implements ITablasHash<Key,Va
 
         TablaHashSeparateChaining<Key, Value> temp = new TablaHashSeparateChaining<Key, Value>(chains);
 
-        for (int i = 0; i < keysNumber; i++) {
+        for (int i = 0; i < size; i++) {
 
 
             Iterator<Key> iter = values[i].keys().iterator();
@@ -53,9 +53,9 @@ public class TablaHashSeparateChaining<Key, Value> implements ITablasHash<Key,Va
 
         }
 
-        this.keysNumber = temp.keysNumber;
-
         this.size = temp.size;
+
+        this.keysNumber = temp.keysNumber;
 
         this.values = temp.values;
 
@@ -65,7 +65,7 @@ public class TablaHashSeparateChaining<Key, Value> implements ITablasHash<Key,Va
 
     private int hash(Key key) {
 
-        return (key.hashCode() & 0x7fffffff) % keysNumber;
+        return (key.hashCode() & 0x7fffffff) % size;
 
     }
 
@@ -76,8 +76,9 @@ public class TablaHashSeparateChaining<Key, Value> implements ITablasHash<Key,Va
 
     }
 
-
-
+    public int numKeys() {
+        return keysNumber;
+    }
 
     public boolean isEmpty() {
 
@@ -122,13 +123,13 @@ public class TablaHashSeparateChaining<Key, Value> implements ITablasHash<Key,Va
         }
 
 
-        if (size >= 5*keysNumber) resize(2* keysNumber);
+        if (keysNumber >= 5* size) resize(2* size);
 
 
 
         int i = hash(key);
 
-        if (!values[i].contains(key)) size++;
+        if (!values[i].contains(key)) keysNumber++;
 
         values[i].put(key, val);
 
@@ -144,12 +145,12 @@ public class TablaHashSeparateChaining<Key, Value> implements ITablasHash<Key,Va
 
         int i = hash(key);
 
-        if (values[i].contains(key)) size--;
+        if (values[i].contains(key)) keysNumber--;
         rta= values[i].get(key);
         values[i].delete(key);
 
 
-        if (keysNumber > INITIAL_CAP && size <= 2* keysNumber) resize(keysNumber /2);
+        if (size > INITIAL_CAP && keysNumber <= 2* size) resize(size /2);
 
         
         
@@ -161,7 +162,7 @@ public class TablaHashSeparateChaining<Key, Value> implements ITablasHash<Key,Va
 
         ListaEncadenada<Key> lista = new ListaEncadenada<>();
 
-        for (int i = 0; i < keysNumber; i++) {
+        for (int i = 0; i < size; i++) {
 
             Iterator<Key> iter = values[i].keys().iterator();
 

@@ -6,8 +6,8 @@ public class TablaHashLinearProbing<Key , Value> implements ITablasHash<Key ,Val
 {
 	private static final int CAPACIDAD_INICIAL = 4;
 
-    private int n;           
-    private int m;           
+    private int n;
+    private int m;
     private Key[] keys;      
     private Value[] vals;  
     
@@ -24,8 +24,14 @@ public class TablaHashLinearProbing<Key , Value> implements ITablasHash<Key ,Val
     }
     
     public int size() {
+        return m;
+    }
+
+    public int numKeys() {
         return n;
     }
+
+
     
     public boolean isEmpty() {
         return size() == 0;
