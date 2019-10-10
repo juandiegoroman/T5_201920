@@ -3,7 +3,7 @@ package model.data_structures;
 
 import java.util.Iterator;
 
-public class TablaHashSeparateChaining<Key extends Comparable, Value> implements ITablasHash<Key,Value>
+public class TablaHashSeparateChaining<Key, Value> implements ITablasHash<Key,Value>
 {
 
     private static final int INITIAL_CAP = 4;
@@ -43,10 +43,12 @@ public class TablaHashSeparateChaining<Key extends Comparable, Value> implements
 
         for (int i = 0; i < keysNumber; i++) {
 
-            for (Key key : values[i].keys()) {
 
+            Iterator<Key> iter = values[i].keys().iterator();
+
+            while (iter.hasNext()) {
+                Key key = iter.next();
                 temp.put(key, values[i].get(key));
-
             }
 
         }
@@ -120,7 +122,7 @@ public class TablaHashSeparateChaining<Key extends Comparable, Value> implements
         }
 
 
-        if (size / keysNumber>= 5) resize(2* keysNumber);
+        if (size >= 5*keysNumber) resize(2* keysNumber);
 
 
 
@@ -161,10 +163,12 @@ public class TablaHashSeparateChaining<Key extends Comparable, Value> implements
 
         for (int i = 0; i < keysNumber; i++) {
 
-            for (Key key : values[i].keys())
+            Iterator<Key> iter = values[i].keys().iterator();
 
+            while (iter.hasNext()) {
+                Key key = iter.next();
                 lista.insertarFinal(key);
-
+            }
         }
 
         return (Iterator<Key>) lista;

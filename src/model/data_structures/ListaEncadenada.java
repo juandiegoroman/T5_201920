@@ -14,10 +14,7 @@ public class ListaEncadenada<E> implements Iterable<E>{
 
     private int tamano;
 
-    @Override
-    public Iterator<E> iterator() {
-        return null;
-    }
+
 
     /* Node Class */
     public static class Nodo<E> {
@@ -33,6 +30,10 @@ public class ListaEncadenada<E> implements Iterable<E>{
         }
     }
 
+    @Override
+    public Iterator<E> iterator() {
+        return new ListaIterador();
+    }
 
 
     public int tamano() {
@@ -51,6 +52,9 @@ public class ListaEncadenada<E> implements Iterable<E>{
         return primero == null;
     }
 
+    public E ultimo() {
+        return ultimo.valor;
+    }
 
     public void insertarPrimero(E valor) {
         if (estaVacia()) {
@@ -128,9 +132,7 @@ public class ListaEncadenada<E> implements Iterable<E>{
     }
 
 
-    public Iterator<E> iterador() {
-        return new ListaIterador();
-    }
+
 
     public void insertarDespues(E valor){
 

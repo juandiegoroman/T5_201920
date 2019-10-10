@@ -265,13 +265,13 @@ public class LinkedKeyList<Key, Value> {
 
     public Iterable<Key> keys()  {
 
-        ListaEncadenada<Key> queue = new ListaEncadenada<>();
+        ListaEncadenada<Key> lista = new ListaEncadenada<>();
 
         for (Node x = first; x != null; x = x.next)
 
-            queue.insertarFinal(x.key);
+            lista.insertarFinal(x.key);
 
-        return queue;
+        return lista;
 
     }
 
